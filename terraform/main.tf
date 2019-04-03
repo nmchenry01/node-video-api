@@ -14,6 +14,10 @@ module "iam" {
   source = "./modules/iam"
 }
 
+locals {
+  env = "${terraform.workspace}"
+}
+
 resource "aws_lambda_function" "get_video_data_lambda" {
   filename      = "lambda_function_payload.zip"
   function_name = "lambda_function_name"
