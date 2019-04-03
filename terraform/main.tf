@@ -11,7 +11,8 @@ provider "aws" {
 }
 
 module "iam" {
-  source = "./modules/iam"
+  source             = "./modules/iam"
+  get_video_data_arn = "${aws_lambda_function.get_video_data.arn}"
 }
 
 locals {
@@ -19,7 +20,7 @@ locals {
   tempDirPath = "../temp"
 }
 
-resource "aws_lambda_function" "get_video_data" {
+resource "aws_lambda_function" "get_s3_contents" {
   filename      = "${local.tempDirPath}/get_video_data.zip"
   function_name = "Get-Video-Date-${local.env}"
   role          = ""                                        //TODO: Implement the IAM role
