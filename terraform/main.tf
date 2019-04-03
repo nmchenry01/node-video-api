@@ -15,25 +15,32 @@ module "iam" {
 }
 
 locals {
-  env = "${terraform.workspace}"
+  env         = "${terraform.workspace}"
+  tempDirPath = "../temp"
 }
 
-resource "aws_lambda_function" "get_video_data_lambda" {
-  filename      = "lambda_function_payload.zip"
-  function_name = "lambda_function_name"
-  role          = "${aws_iam_role.iam_for_lambda.arn}"
-  handler       = "exports.test"
+resource "aws_lambda_function" "get_video_data" {
+  filename      = "${local.tempDirPath}/get_video_data.zip"
+  function_name = "Get-Video-Date-${local.env}"
+  role          = ""                                        //TODO: Implement the IAM role
+  handler       = "index.handler"
 
-  # The filebase64sha256() function is available in Terraform 0.11.12 and later
-  # For Terraform 0.11.11 and earlier, use the base64sha256() function and the file() function:
-  # source_code_hash = "${base64sha256(file("lambda_function_payload.zip"))}"
-  source_code_hash = "${filebase64sha256("lambda_function_payload.zip")}"
+  source_code_hash = "${filebase64sha256("${local.tempDirPath}/get_video_data.zip")}"
 
-  runtime = "nodejs8.10"
+  runtime     = "nodejs8.10"
+  timeout     = 10
+  memory_size = 128
+}
 
-  environment {
-    variables = {
-      foo = "bar"
-    }
-  }
+resource "aws_lambda_function" "get_signed_url" {
+  filename      = "${local.tempDirPath}/get_signed_url.zip"
+  function_name = "Get-Signed-Url-${local.env}"
+  role          = ""                                        //TODO: Implement the IAM role
+  handler       = "index.handler"
+
+  source_code_hash = "${filebase64sha256("${local.tempDirPath}/get_signed_url.zip")}"
+
+  runtime     = "nodejs8.10"
+  timeout     = 10
+  memory_size = 128
 }
