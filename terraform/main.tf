@@ -11,8 +11,9 @@ provider "aws" {
 }
 
 module "iam" {
-  source             = "./modules/iam"
-  get_video_data_arn = "${aws_lambda_function.get_video_data.arn}"
+  source              = "./modules/iam"
+  get_s3_contents_arn = "${aws_lambda_function.get_s3_contents.arn}"
+  get_signed_url_arn  = "${aws_lambda_function.get_signed_url.arn}"
 }
 
 locals {
@@ -20,13 +21,17 @@ locals {
   tempDirPath = "../temp"
 }
 
+/*
+  AWS Lambda Function(s)
+*/
+
 resource "aws_lambda_function" "get_s3_contents" {
-  filename      = "${local.tempDirPath}/get_video_data.zip"
+  filename      = "${local.tempDirPath}/get_s3_contents.zip"
   function_name = "Get-Video-Date-${local.env}"
-  role          = ""                                        //TODO: Implement the IAM role
+  role          = ""                                         //TODO: Implement the IAM role
   handler       = "index.handler"
 
-  source_code_hash = "${filebase64sha256("${local.tempDirPath}/get_video_data.zip")}"
+  source_code_hash = "${filebase64sha256("${local.tempDirPath}/get_s3_contents.zip")}"
 
   runtime     = "nodejs8.10"
   timeout     = 10
