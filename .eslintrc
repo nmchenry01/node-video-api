@@ -1,0 +1,8 @@
+{
+  "plugins": ["prettier", "jest"],
+  "extends": ["airbnb-base", "prettier", "plugin:jest/recommended"],
+  "env": { "node": true, "es6": true, "jest/globals": true },
+  "rules": {
+    "no-underscore-dangle": ["error", { "allow": ["_id", "_rev"] }]
+  }
+}
