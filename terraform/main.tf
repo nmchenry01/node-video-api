@@ -27,8 +27,8 @@ locals {
 
 resource "aws_lambda_function" "get_s3_contents" {
   filename      = "${local.tempDirPath}/get_s3_contents.zip"
-  function_name = "Get-Video-Date-${local.env}"
-  role          = ""                                         //TODO: Implement the IAM role
+  function_name = "Get-S3-Contents-${local.env}"
+  role          = "${module.iam.get_s3_contents_lambda_role}"
   handler       = "index.handler"
 
   source_code_hash = "${filebase64sha256("${local.tempDirPath}/get_s3_contents.zip")}"
@@ -41,7 +41,7 @@ resource "aws_lambda_function" "get_s3_contents" {
 resource "aws_lambda_function" "get_signed_url" {
   filename      = "${local.tempDirPath}/get_signed_url.zip"
   function_name = "Get-Signed-Url-${local.env}"
-  role          = ""                                        //TODO: Implement the IAM role
+  role          = "${module.iam.get_signed_url_lambda_role}"
   handler       = "index.handler"
 
   source_code_hash = "${filebase64sha256("${local.tempDirPath}/get_signed_url.zip")}"
