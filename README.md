@@ -4,5 +4,6 @@ The purpose of this repository is to provide a super simple API for use with a f
 
 ## Potential Improvements
 
-Lambda versioning
-Layers
+- Lambda versioning
+- Layers
+- Semantic versioning
