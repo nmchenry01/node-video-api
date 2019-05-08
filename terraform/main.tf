@@ -14,6 +14,7 @@ module "iam" {
   source              = "./modules/iam"
   get_s3_contents_arn = "${aws_lambda_function.get_s3_contents.arn}"
   get_signed_url_arn  = "${aws_lambda_function.get_signed_url.arn}"
+  s3_arn              = "${aws_s3_bucket.node_video_api_content_bucket.arn}"
 }
 
 locals {
@@ -22,7 +23,7 @@ locals {
 }
 
 /*
-  AWS Lambda Function(s)
+  --- Lambda Function(s) ---
 */
 
 resource "aws_lambda_function" "get_s3_contents" {
@@ -49,4 +50,21 @@ resource "aws_lambda_function" "get_signed_url" {
   runtime     = "nodejs8.10"
   timeout     = 10
   memory_size = 128
+}
+
+/*
+  --- S3 Bucket(s) --- 
+*/
+
+resource "aws_s3_bucket" "node_video_api_content_bucket" {
+  bucket = "node-video-api-content"
+  acl    = "private"
+
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
 }
