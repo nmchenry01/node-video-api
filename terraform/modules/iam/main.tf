@@ -9,7 +9,19 @@ data "aws_iam_policy_document" "get_s3_contents_lambda_policy_document" {
     ]
 
     resources = [
-      "arn:aws:s3:::*",
+      "${var.s3_arn}",
+    ]
+  }
+
+  statement {
+    actions = [
+      "logs:CreateLogGroup",
+      "logs:CreateLogStream",
+      "logs:PutLogEvents",
+    ]
+
+    resources = [
+      "*",
     ]
   }
 }
@@ -21,7 +33,19 @@ data "aws_iam_policy_document" "get_signed_url_lambda_policy_document" {
     ]
 
     resources = [
-      "arn:aws:s3:::*",
+      "${var.s3_arn}",
+    ]
+  }
+
+  statement {
+    actions = [
+      "logs:CreateLogGroup",
+      "logs:CreateLogStream",
+      "logs:PutLogEvents",
+    ]
+
+    resources = [
+      "*",
     ]
   }
 }
