@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- Building and deploying only the production dependencies for the lambda functions to reduce bundle size
+
+### Changed
+
+- Changed zip path for the lambda functions to the root directory from the temp directory
+- Updated path for lambda function source code and hash
+
+### Removed
+
+- The temp directory
+
+[0.0.3] 2019-05-09
+
+### Added
+
 - Add API Gateway and attach to lambda functions
 - Update lambda IAM permissions to be invoked by API Gateway
 

@@ -26,7 +26,7 @@ module "iam" {
 
 locals {
   env         = "${terraform.workspace}"
-  tempDirPath = "../../temp"
+  tempDirPath = "../.."
 }
 
 /*
