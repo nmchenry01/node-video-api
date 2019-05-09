@@ -120,3 +120,13 @@ resource "aws_lambda_permission" "get_s3_contents_lambda_permissions" {
   # More: http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-control-access-using-iam-policies-to-invoke-api.html
   source_arn = "arn:aws:execute-api:${var.account_region}:${var.account_id}:${var.api_gateway_id}/*/${var.get_s3_contents_http_method}${var.get_s3_contents_resource_path}"
 }
+
+resource "aws_lambda_permission" "get_signed_url_lambda_permissions" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = "${var.get_signed_url_arn}"
+  principal     = "apigateway.amazonaws.com"
+
+  # More: http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-control-access-using-iam-policies-to-invoke-api.html
+  source_arn = "arn:aws:execute-api:${var.account_region}:${var.account_id}:${var.api_gateway_id}/*/${var.get_signed_url_http_method}${var.get_signed_url_resource_path}"
+}

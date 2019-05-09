@@ -28,6 +28,16 @@ variable "get_s3_contents_resource_path" {
   description = "The complete path for this API resource, including all parent paths"
 }
 
+variable "get_signed_url_http_method" {
+  type        = "string"
+  description = "The HTTP Method for the get_signed_url method associated with the equivalent Lambda function"
+}
+
+variable "get_signed_url_resource_path" {
+  type        = "string"
+  description = "The complete path for this API resource, including all parent paths"
+}
+
 variable "account_id" {
   type        = "string"
   description = "The AWS account id"

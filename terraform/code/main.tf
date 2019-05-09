@@ -18,6 +18,8 @@ module "iam" {
   api_gateway_id                = "${aws_api_gateway_rest_api.node_video_api_gatetway.id}"
   get_s3_contents_http_method   = "${aws_api_gateway_method.get_s3_contents_method.http_method}"
   get_s3_contents_resource_path = "${aws_api_gateway_resource.contents.path}"
+  get_signed_url_http_method    = "${aws_api_gateway_method.get_signed_url_method.http_method}"
+  get_signed_url_resource_path  = "${aws_api_gateway_resource.url.path}"
   account_id                    = "${var.account_id}"
   account_region                = "${var.account_region}"
 }
@@ -128,4 +130,13 @@ resource "aws_api_gateway_integration" "get_s3_contents_integration" {
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
   uri                     = "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/${aws_lambda_function.get_s3_contents.arn}/invocations"
+}
+
+resource "aws_api_gateway_integration" "get_signed_url_integration" {
+  rest_api_id             = "${aws_api_gateway_rest_api.node_video_api_gatetway.id}"
+  resource_id             = "${aws_api_gateway_resource.url.id}"
+  http_method             = "${aws_api_gateway_method.get_signed_url_method.http_method}"
+  integration_http_method = "POST"
+  type                    = "AWS_PROXY"
+  uri                     = "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/${aws_lambda_function.get_signed_url.arn}/invocations"
 }
