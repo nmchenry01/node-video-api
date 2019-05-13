@@ -1,4 +1,4 @@
-function formatBytes(bytes, decimals = 2) {
+const formatBytes = (bytes, decimals = 2) => {
   if (bytes === 0) return '0 Bytes';
 
   const k = 1024;
@@ -8,7 +8,7 @@ function formatBytes(bytes, decimals = 2) {
   const i = Math.floor(Math.log(bytes) / Math.log(k));
 
   return `${parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`;
-}
+};
 
 const formatBody = s3Objects => {
   return s3Objects.Contents.map(object => {
