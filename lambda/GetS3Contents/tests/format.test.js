@@ -58,8 +58,38 @@ describe('format.js', () => {
     });
   });
   describe('formatBody', () => {
-    it('should ', () => {
-      expect.assertions(0);
+    it('should return formatted object array for 1 or more objects', () => {
+      expect.assertions(1);
+      const s3Objects = {
+        Contents: [
+          { Key: 'id1', Size: 1500 },
+          { Key: 'id2', Size: 1500 },
+          { Key: 'id3', Size: 1500 },
+        ],
+      };
+
+      const response = formatBody(s3Objects);
+
+      const expectedResponse = [
+        { key: 'id1', size: '1.46 KB' },
+        { key: 'id2', size: '1.46 KB' },
+        { key: 'id3', size: '1.46 KB' },
+      ];
+
+      expect(response).toEqual(expectedResponse);
+    });
+
+    it('should return an empty array if there are no objects', () => {
+      expect.assertions(1);
+      const s3Objects = {
+        Contents: [],
+      };
+
+      const response = formatBody(s3Objects);
+
+      const expectedResponse = [];
+
+      expect(response).toEqual(expectedResponse);
     });
   });
 });
