@@ -19,7 +19,7 @@ module "iam" {
   get_s3_contents_http_method   = "${aws_api_gateway_method.get_s3_contents_method.http_method}"
   get_s3_contents_resource_path = "${aws_api_gateway_resource.contents.path}"
   get_signed_url_http_method    = "${aws_api_gateway_method.get_signed_url_method.http_method}"
-  get_signed_url_resource_path  = "${aws_api_gateway_resource.url.path}"
+  get_signed_url_resource_path  = "${aws_api_gateway_resource.key.path}"
   account_id                    = "${var.account_id}"
   account_region                = "${var.account_region}"
 }
@@ -115,6 +115,12 @@ resource "aws_api_gateway_resource" "url" {
   rest_api_id = "${aws_api_gateway_rest_api.node_video_api_gatetway.id}"
 }
 
+resource "aws_api_gateway_resource" "key" {
+  path_part   = "{key}"
+  parent_id   = "${aws_api_gateway_resource.url.id}"
+  rest_api_id = "${aws_api_gateway_rest_api.node_video_api_gatetway.id}"
+}
+
 /*
   --- API Gateway Method(s) --- 
 */
@@ -128,9 +134,13 @@ resource "aws_api_gateway_method" "get_s3_contents_method" {
 
 resource "aws_api_gateway_method" "get_signed_url_method" {
   rest_api_id   = "${aws_api_gateway_rest_api.node_video_api_gatetway.id}"
-  resource_id   = "${aws_api_gateway_resource.url.id}"
+  resource_id   = "${aws_api_gateway_resource.key.id}"
   http_method   = "GET"
   authorization = "NONE"
+
+  request_parameters {
+    "method.request.path.key" = true
+  }
 }
 
 /*
@@ -148,7 +158,7 @@ resource "aws_api_gateway_integration" "get_s3_contents_integration" {
 
 resource "aws_api_gateway_integration" "get_signed_url_integration" {
   rest_api_id             = "${aws_api_gateway_rest_api.node_video_api_gatetway.id}"
-  resource_id             = "${aws_api_gateway_resource.url.id}"
+  resource_id             = "${aws_api_gateway_resource.key.id}"
   http_method             = "${aws_api_gateway_method.get_signed_url_method.http_method}"
   integration_http_method = "POST"
   type                    = "AWS_PROXY"

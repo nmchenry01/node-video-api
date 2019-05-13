@@ -24,6 +24,7 @@
     "prettier": "^1.16.4"
   },
   "dependencies": {
-    "bunyan": "^1.8.12"
+    "bunyan": "^1.8.12",
+    "lodash": "^4.17.11"
   }
 }
