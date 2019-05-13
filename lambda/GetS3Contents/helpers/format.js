@@ -11,11 +11,17 @@ const formatBytes = (bytes, decimals = 2) => {
   return `${parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`;
 };
 
-const formatBody = s3Objects => {
+const formatBody = (s3Objects, logger) => {
   return s3Objects.Contents.map(object => {
     const { Size, Key } = object;
-    const size = formatBytes(Size);
-    return { key: Key, size };
+
+    try {
+      const size = formatBytes(Size);
+      return { key: Key, size };
+    } catch (error) {
+      logger.error({ event: 'ERROR', object, error }, 'Error formatting bytes');
+      throw Error(error.message);
+    }
   });
 };
 

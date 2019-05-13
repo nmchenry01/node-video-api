@@ -10,8 +10,6 @@ const manifest = require('./config/manifest');
 const s3 = new AWS.S3();
 const { bucket } = manifest;
 
-// TODO: Need to implement pagination for use with UI
-
 exports.handler = async (event, context) => {
   logger.info(
     { event: 'START', triggerEvent: event, context },
@@ -19,10 +17,10 @@ exports.handler = async (event, context) => {
   );
 
   const s3Objects = await listS3Objects(s3, bucket, logger);
-  logger.info({ event: 'REC', s3Objects });
+  logger.debug({ event: 'RECV', s3Objects });
 
-  const formattedBody = formatBody(s3Objects);
-  logger.info({ event: 'REC', formattedBody });
+  const formattedBody = formatBody(s3Objects, logger);
+  logger.debug({ event: 'RECV', formattedBody });
 
   const response = {
     statusCode: 200,
@@ -30,5 +28,10 @@ exports.handler = async (event, context) => {
     body: JSON.stringify(formattedBody),
     isBase64Encoded: false,
   };
+
+  logger.info(
+    { event: 'END', response },
+    'Lambda returning response to client'
+  );
   return response;
 };
