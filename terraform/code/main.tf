@@ -64,6 +64,13 @@ resource "aws_lambda_function" "get_signed_url" {
   runtime     = "nodejs8.10"
   timeout     = 10
   memory_size = 128
+
+  environment = {
+    variables = {
+      NODE_ENV = "${var.NODE_ENV}"
+      bucket   = "${aws_s3_bucket.node_video_api_content_bucket.id}"
+    }
+  }
 }
 
 /*
