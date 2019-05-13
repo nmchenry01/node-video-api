@@ -1,4 +1,5 @@
 const formatBytes = (bytes, decimals = 2) => {
+  if (!Number.isInteger(bytes)) throw Error('Bytes is not a valid integer');
   if (bytes === 0) return '0 Bytes';
 
   const k = 1024;
