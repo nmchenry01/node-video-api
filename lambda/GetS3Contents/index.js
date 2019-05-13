@@ -1,5 +1,5 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-console */
-// eslint-disable-next-line import/no-unresolved
 const AWS = require('aws-sdk');
 
 const logger = require('./helpers/logger');
@@ -9,6 +9,8 @@ const manifest = require('./config/manifest');
 
 const s3 = new AWS.S3();
 const { bucket } = manifest;
+
+// TODO: Need to implement pagination for use with UI
 
 exports.handler = async (event, context) => {
   logger.info(
