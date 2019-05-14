@@ -34,6 +34,7 @@ data "aws_iam_policy_document" "get_signed_url_lambda_policy_document" {
 
     resources = [
       "${var.s3_arn}",
+      "${var.s3_arn}/*",
     ]
   }
 

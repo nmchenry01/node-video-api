@@ -4,6 +4,7 @@ const AWS = require('aws-sdk');
 const _ = require('lodash');
 
 const logger = require('./helpers/logger');
+const { getSignedUrl } = require('./helpers/aws');
 const manifest = require('./config/manifest');
 
 const s3 = new AWS.S3();
@@ -26,6 +27,10 @@ exports.handler = async (event, context) => {
     };
     return response;
   }
+
+  const params = { s3, key, bucket, logger };
+  const signedUrl = getSignedUrl(params);
+  logger.debug({ event: 'RECV', signedUrl });
 
   const response = {
     statusCode: 200,
