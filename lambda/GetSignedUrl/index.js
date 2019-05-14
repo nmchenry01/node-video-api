@@ -35,8 +35,14 @@ exports.handler = async (event, context) => {
   const response = {
     statusCode: 200,
     headers: {},
-    body: 'Hello World from the GetSignedUrl lambda',
+    body: JSON.stringify({ signedUrl }),
     isBase64Encoded: false,
   };
+
+  logger.info(
+    { event: 'END', response },
+    'Lambda returning response to client'
+  );
+
   return response;
 };
