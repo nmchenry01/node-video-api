@@ -1,3 +1,5 @@
+// TODO: Refactor backend state to take parameters: https://github.com/hashicorp/terraform/issues/13022
+
 terraform {
   backend "s3" {
     bucket = "tf-backend-state-2019"

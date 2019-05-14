@@ -1,3 +1,7 @@
+# TODO: Add terraform init stage that creates the necessary workspaces
+# TODO: Add workspace select command to deploy and destroy
+# TODO: Add parameter for env for deploy and destroy
+
 deploy:
 	cd lambda/GetS3Contents && \
 	rm -rf node_modules && \
