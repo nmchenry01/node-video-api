@@ -1,6 +1,0 @@
-{
-  "hooks": {
-    "pre-commit": "eslint --fix .",
-    "pre-push": "cd lambda/GetS3Contents && npm run test"
-  }
-}
