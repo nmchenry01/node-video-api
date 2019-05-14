@@ -1,6 +1,0 @@
-{
-  "hooks": {
-    "pre-commit": "eslint --fix .",
-    "pre-push": "npm run test"
-  }
-}

@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+[0.0.6] 2019-05-13
+
+### Added
+
+- Implemented the GetSignedUrl lambda
+- Unit tests for the above lambda
+- Helper functions and configs
+
+### Removed
+
+- Husky, need to come up with a different git hook strategy
+
 [0.0.5] 2019-05-13
 
 ### Added
