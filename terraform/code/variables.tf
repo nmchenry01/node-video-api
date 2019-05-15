@@ -1,5 +1,3 @@
-// TODO: Add new variables to support parameterized remote state
-
 variable "account_region" {
   type        = "string"
   description = "The AWS region for deployment"
