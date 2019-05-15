@@ -1,6 +1,12 @@
-# TODO: Add terraform init stage that creates the necessary workspaces
 # TODO: Add workspace select command to deploy and destroy
 # TODO: Add parameter for env for deploy and destroy
+
+init:
+	cd terraform/code && \
+	terraform init -backend-config="env/backendConfig" && \
+	terraform workspace new DEV && \
+	terraform workspace new QA && \
+	terraform workspace new PROD
 
 deploy:
 	cd lambda/GetS3Contents && \
