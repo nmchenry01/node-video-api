@@ -1,14 +1,12 @@
 terraform {
-  backend "s3" {
-    bucket = "tf-backend-state-2019"
-    key    = "node-video-api/terraform.tfstate"
-    region = "us-east-1"
-  }
+  backend "s3" {}
 }
 
 provider "aws" {
   region = "${var.account_region}"
 }
+
+data "aws_caller_identity" "current" {}
 
 module "iam" {
   source                        = "./modules/iam"
@@ -20,7 +18,7 @@ module "iam" {
   get_s3_contents_resource_path = "${aws_api_gateway_resource.contents.path}"
   get_signed_url_http_method    = "${aws_api_gateway_method.get_signed_url_method.http_method}"
   get_signed_url_resource_path  = "${aws_api_gateway_resource.key.path}"
-  account_id                    = "${var.account_id}"
+  account_id                    = "${data.aws_caller_identity.current.account_id}"
   account_region                = "${var.account_region}"
 }
 
@@ -41,7 +39,7 @@ resource "aws_lambda_function" "get_s3_contents" {
 
   source_code_hash = "${filebase64sha256("${local.tempDirPath}/get_s3_contents.zip")}"
 
-  runtime     = "nodejs8.10"
+  runtime     = "nodejs10.x"
   timeout     = 10
   memory_size = 128
 
@@ -61,7 +59,7 @@ resource "aws_lambda_function" "get_signed_url" {
 
   source_code_hash = "${filebase64sha256("${local.tempDirPath}/get_signed_url.zip")}"
 
-  runtime     = "nodejs8.10"
+  runtime     = "nodejs10.x"
   timeout     = 10
   memory_size = 128
 
@@ -74,7 +72,7 @@ resource "aws_lambda_function" "get_signed_url" {
 }
 
 /*
-  --- S3 Bucket(s) --- 
+  --- S3 Bucket(s) ---
 */
 
 resource "aws_s3_bucket" "node_video_api_content_bucket" {
@@ -91,7 +89,7 @@ resource "aws_s3_bucket" "node_video_api_content_bucket" {
 }
 
 /*
-  --- API Gateways(s) --- 
+  --- API Gateways(s) ---
 */
 
 resource "aws_api_gateway_rest_api" "node_video_api_gatetway" {
@@ -100,7 +98,7 @@ resource "aws_api_gateway_rest_api" "node_video_api_gatetway" {
 }
 
 /*
-  --- API Gateway Resource(s) --- 
+  --- API Gateway Resource(s) ---
 */
 
 resource "aws_api_gateway_resource" "contents" {
@@ -122,7 +120,7 @@ resource "aws_api_gateway_resource" "key" {
 }
 
 /*
-  --- API Gateway Method(s) --- 
+  --- API Gateway Method(s) ---
 */
 
 resource "aws_api_gateway_method" "get_s3_contents_method" {
@@ -144,7 +142,7 @@ resource "aws_api_gateway_method" "get_signed_url_method" {
 }
 
 /*
-  --- API Gateway Integration(s) --- 
+  --- API Gateway Integration(s) ---
 */
 
 resource "aws_api_gateway_integration" "get_s3_contents_integration" {
