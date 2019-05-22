@@ -1,6 +1,6 @@
 init:
 	cd terraform/code && \
-	terraform init -backend-config="env/backendConfig" && \
+	terraform init -backend-config="env/backendConfig.tf" && \
 	terraform workspace new prod && \
 	terraform workspace new qa && \
 	terraform workspace new dev

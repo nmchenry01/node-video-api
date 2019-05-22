@@ -30,7 +30,7 @@ The JavaScript package manager used by this repository is NPM. Follow the instru
 
 Once the above dependencies have been installed successfully, the commands listed in the makefile can be used to initialize and deploy the API. The makefile contains three commands, `init`, `deploy`, and `destroy`.
 
-Prior to running the `make init` command, it is important to edit the \*.tfvars files under the terraform/code/env directory. Replace the values defined in these files with values specific to your own account/preferences. Note, you must create the S3 bucket in AWS to host remote state prior to running any of the commands using Terraform.
+Prior to running the `make init` command, it is important to edit the \*.tfvars files and the backendConfig.tf file under the terraform/code/env directory. Replace the values defined in these files with values specific to your own account/preferences. Note, you must create the S3 bucket in AWS to host Terraform remote state (IE, `tf-backend-state-2019` in backendConfig.tf) prior to running any of the commands using Terraform.
 
 After this configuration is done, run `make init` in the root of the project to initialize Terraform and configure the DEV, QA, and PROD Terraform workspaces (used as environments). For a summary of Terraform workspaces, see here: https://www.terraform.io/docs/state/workspaces.html.
 
