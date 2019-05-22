@@ -34,13 +34,17 @@ Prior to running the `make init` command, it is important to edit the \*.tfvars 
 
 After this configuration is done, run `make init` in the root of the project to initialize Terraform and configure the DEV, QA, and PROD Terraform workspaces (used as environments). For a summary of Terraform workspaces, see here: https://www.terraform.io/docs/state/workspaces.html.
 
-Once the `init` command is successful, you are ready to run `make deploy` from the root of the repository in order to deploy the API to AWS. The deploy command takes one parameter specifying the environment to which is is being deployed (leveraging Terraform workspaces). An example of running this command is `make deploy ENV=dev`, which would deploy using the Terraform "dev" workspace. Note, if you want to deploy different logical environments to different AWS accounts, this can be configured by modifying the \*.tfvars files to accommodate for this.
+Once the `init` command is successful, you are ready to run the `deploy` command from the root of the repository in order to deploy the API to AWS. The deploy command takes one parameter specifying the environment to which is is being deployed (leveraging Terraform workspaces). An example of running this command is `make deploy ENV=dev`, which would deploy using the Terraform "dev" workspace. Note, if you want to deploy different logical environments to different AWS accounts, this can be configured by potentially modifying the \*.tfvars files and leveraging AWS profiles (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html).
 
-Finally, when you want to cleanup the resources that have been deployed from this repository, use the `make destroy` command run from the root of the repository. Like the `make deploy` command, it also takes a parameter specifying the environment to apply the action to. Similarly, an example of this command is `make destroy ENV=dev` which would destroy the resources in the Terraform "dev" workspace.
+Finally, when you want to cleanup the resources that have been deployed from this repository, use the `destroy` command run from the root of the repository. Like the `deploy` command, it also takes a parameter specifying the environment to apply the action to. Similarly, an example of this command is `make destroy ENV=dev` which would destroy the resources in the Terraform "dev" workspace.
+
+## Running the tests
+
+Each of the Lambda functions has their own package.json file, with accompanying scripts in each. Additionally, each Lambda function has a /tests directory that contain the tests for each function respectively. The tests can be run using `npm test` in the root of each lambda function (IE, lambda/GetS3Contents/) after installing dependencies locally. In the planned CodePipeline integration, this command will be part of the build process in order to ensure reliable code is deployed.
 
 ## Planned Improvements
 
 - CodePipeline integration
 - Cognito integration for API Gateway
-- Makefile upgrades
 - All TODOS listed in the repo
+- Whatever I find cool and interesting
