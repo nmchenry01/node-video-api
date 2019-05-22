@@ -1,6 +1,6 @@
 # Node-Video-API
 
-The purpose of this repository is to provide a serverless API for use with a frontend web UI. At the current moment it does two things, returns all the contents of an S3 bucket and generates a pre-signed URL for access to the objects for authorized users (via AWS Cognito). This will likely be expanded upon as the React UI is built out and functionality is required. This API is implemented using AWS Lambda functions proxied by AWS API Gateway, and deployed via the command line using Terraform. In a later iteration, deployment will be facilitated by AWS CodePipeline.
+The purpose of this repository is to provide a serverless API for use with a frontend web UI. At the current moment it does two things, returns all the contents of an S3 bucket and generates a pre-signed URL for access to the objects for authorized users (which will be facilitated via AWS Cognito). This will likely be expanded upon as the React UI is built out and functionality is required. This API is implemented using AWS Lambda functions proxied by AWS API Gateway, and deployed via the command line using Terraform. In a later iteration, deployment will be facilitated by AWS CodePipeline.
 
 ## Getting Started
 
@@ -8,7 +8,7 @@ After cloning the repository to your local machine, the dependencies below must 
 
 ### AWS
 
-The first requirement is that your machine have a ".aws" folder containing AWS credentials and configs installed at your home directory. This is due to the fact that this code is meant to be deployed to an AWS account, and Terraform using the credentials in its deployment process.
+The first requirement is that your machine have a ".aws" folder containing AWS credentials and configs installed in your home directory. This is due to the fact that this code is meant to be deployed to AWS, and Terraform uses the credentials in its deployment process.
 
 While the folder can be can be created manually, it is easier to install the AWS CLI tool following these directions: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html. Once you have installed the AWS CLI, run the command `aws configure` and follow the prompts by filling in information specific to your AWS account. This will require you to create an AWS IAM user in your account with programmatic access. For help, see this guide: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html.
 
