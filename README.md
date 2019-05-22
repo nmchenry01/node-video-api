@@ -34,9 +34,9 @@ Prior to running the `make init` command, it is important to edit the \*.tfvars 
 
 After this configuration is done, run `make init` in the root of the project to initialize Terraform and configure the DEV, QA, and PROD Terraform workspaces (used as environments). For a summary of Terraform workspaces, see here: https://www.terraform.io/docs/state/workspaces.html.
 
-Once the `init` command is successful, you are ready to run `make deploy` from the root of the repository in order to deploy the API to AWS. The deploy command takes one parameter specifying the environment to which is is being deployed (leveraging Terraform workspaces). An example of running this command is `make deploy env=DEV`, which would deploy using the Terraform "DEV" workspace. Note, if you want to deploy different logical environments to different AWS accounts, this can be configured by modifying the \*.tfvars files to accommodate for this.
+Once the `init` command is successful, you are ready to run `make deploy` from the root of the repository in order to deploy the API to AWS. The deploy command takes one parameter specifying the environment to which is is being deployed (leveraging Terraform workspaces). An example of running this command is `make deploy ENV=dev`, which would deploy using the Terraform "dev" workspace. Note, if you want to deploy different logical environments to different AWS accounts, this can be configured by modifying the \*.tfvars files to accommodate for this.
 
-Finally, when you want to cleanup the resources that have been deployed from this repository, use the `make destroy` command run from the root of the repository. Like the `make deploy` command, it also takes a parameter specifying the environment to apply the action to. Similarly, an example of this command is `make destroy env=DEV` which would destroy the resources in the Terraform "DEV" workspace.
+Finally, when you want to cleanup the resources that have been deployed from this repository, use the `make destroy` command run from the root of the repository. Like the `make deploy` command, it also takes a parameter specifying the environment to apply the action to. Similarly, an example of this command is `make destroy ENV=dev` which would destroy the resources in the Terraform "dev" workspace.
 
 ## Planned Improvements
 
